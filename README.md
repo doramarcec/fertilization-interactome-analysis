@@ -1,9 +1,10 @@
 # Network analysis of the fertilization pathway
-Fertilization is a process in reproductive biology which results in the fusion of male and female gametes, known as spermatozoon and oocyte, respectively, leading to the unison of parental genomes. Following reproduction, fertilization is initiated by sperm capacitation through the oviduct, after which the sperm recognises the oocyte and interacts with zona pellucida, which is the oocyte-surrounding extracellular matrix. The sperm then adheres to the oolemma, which is the oocyte plasma membrane, followed by spermatozoon-oocyte fusion (provided all required proteins are active and functional). After the gamete fusion, the spermatozoon is taken into the cytoplasm of the oocyte, known as the ooplasm, where it induces oocyte activation and embryogenesis.
+Fertilization is a process in reproductive biology which results in the fusion of male and female gametes, known as spermatozoon and oocyte, respectively, leading to the unison of parental genomes. Following reproduction, fertilization is initiated by sperm capacitation through the oviduct, after which the spermatozoa recognise the oocyte and interact with zona pellucida, which is the oocyte-surrounding extracellular matrix. The spermatozoa then adhere to the oolemma, which is the oocyte plasma membrane, followed by spermatozoon-oocyte fusion (provided all required proteins are active and functional). After the gamete fusion, the spermatozoon is taken into the cytoplasm of the oocyte, known as the ooplasm, where it induces oocyte activation and embryogenesis.
+
+However, not much is known about the molecular interplay in the fertilization pathway, so in this repository, I will perform a simple network analysis using the fertilization pathway data from the Reactome database. 
 
 ## Data accessibility
-
-The data can be accessed on the [STRING](https://string-db.org/) database by searching for the term 'fertilization', selecting 'MAP-1187000 (Reactome)' from the list of terms, and choosing Homo sapiens as an organism. The network can be exported as tabular text output, which should download as the 'string_interactions.tsv' file. 
+The data can be accessed on the [STRING](https://string-db.org/) database by searching for the term 'fertilization', selecting 'MAP-1187000 (Reactome)' from the list of terms, and choosing Homo sapiens as an organism. The network can be exported as tabular text output, which should download as the 'string_interactions.tsv' file. The option to export the data as a tabular text output is the reason we are using a STRING database instead of the Reactome database directly, as the Reactome database offers different output formats that are more challenging to import. 
 
 ## Network analysis
 
@@ -38,7 +39,7 @@ nx.draw_networkx(fertilization)
 
 The above line of code plots the following graph:<br/>
 
-![fertilization-network](https://github.com/user-attachments/assets/77ffe8e6-78e4-43bb-b1c5-7c346314ecdc)
+<img src="https://github.com/user-attachments/assets/51cd86fd-752f-4041-b5c1-5115c75e7124" width="450" />
 
 From this, we can see that our network is divided into two groups of proteins that are loosely connected. In other words, our network has a modular structure which is very common for biological networks, and the two modules encode different biological functions. To understand this better and take this analysis further, we will introduce a few concepts from the Graph Theory.
 
@@ -70,7 +71,7 @@ plt.plot(nx.degree_histogram(fertilization))
 
 This plots the histogram below, where X-axis represents a degree, and y-axis represents a frequency of a degree:<br/>
 
-![degree-histogram](https://github.com/user-attachments/assets/469278b1-77df-4041-a25b-f3f4788f56f3)
+<img src="https://github.com/user-attachments/assets/7c5d002c-fb1f-406d-9643-6015b9225d95" width="450" />
 
 From this histogram, we can understand that the minimum and maximum number of links a node in our network has is 6 and 17, respectively, including 5 nodes containing 6 links (in other words, 5 nodes with a degree of 6), and 1 node with a degree of 17. Moreover, 10 is the most frequent degree, as 6 nodes have a degree of 10.
 
@@ -192,7 +193,7 @@ nx.draw_networkx(fertilization, pos=pos, with_labels=True,
 
 From the above code chunk, we get the following output:
 
-<img src="https://github.com/user-attachments/assets/6abe66fe-2efc-4890-b92d-ac0c95ed6ff9" width="650" />
+<img src="https://github.com/user-attachments/assets/2648d6c2-1e83-4d03-92f5-84f7b23945dc" width="650" />
 
 From this, we can see the module separation more clearly, and we can see that actually there may be not two, but three modules. 
 
@@ -206,15 +207,18 @@ Zona pellucida is an oocyte-surrounding extracellular matrix that mediates sperm
 ### Migration of spermatozoa
 CATSPER1, with the greatest betweenness centrality, is a subunit of a Catsper channel in spermatozoa, which is a Ca<sup>2+</sup> channel that mediates the motility of the spermatozoa (Uhlén et al., 2015). Studies on murine models identified that Catsper channel is essential for male fertility, and its inactivation resulted in infertility (Ren et al., 2001). 
 
+#### Interaction with zona pellucida
 On the other hand, ADAM2, ADAM20, ADAM21, and ADAM30 are domains of a sperm membrane glycoprotein known as Fertilin, which has an important role in migration of the spermatozoa through the oviduct, and binding both the zona pellucida and eventually the oocyte (Uhlén et al., 2015). 
 
-Thus, we now understand that Catsper proteins and ADAM proteins from our network make subunits of Catsper channel and Fertilin, respectively, which are important in sperm motility and capacitation.
+Thus, we now understand that Catsper proteins and ADAM proteins from our network make subunits of Catsper channel and Fertilin, respectively, which are important in sperm motility and capacitation. Moreover, ADAM2, ZP1 and ZP4 were identified as the nodes with the higest closeness centrality in our analysis, implying these protein subunits are highly influential within this network. This implies that the interaction between the spermatozoa and zona pellucida may be mediated by molecular interaction between ADAM2 subunit of the Fertilin protein and zona pellucida proteins 1 and 4. 
+
+Moreover, as CATSPER1 and ADAM2 have been identified as nodes with the highest betweenness centrality, they represent bridges connecting the biological functions (i.e the modules) of our network. 
 
 ### Sperm-oocyte adhesion and fusion
-IZUMO proteins are sperm membrane proteins involved in the adhesion of the spermatozoa and oocyte. IZUMO1 is located on the sperm membrane and it binds the IZUMO1R receptor on the oolemma, facilitating the adhesion. This interaction is mediated by oocyte transmembrane proteins CD9 and CD81, the absence of which inhibits the sperm-oocyte fusion despite the normal adhesion (Vondrakova et al., 2022). The function of IZUMO2, IZUMO3 and IZUMO4 are unclear. Following sperm-oocyte adhesion, human-specific sperm-oocyte fusion epitope, FCRL3 protein (not shown in our network) interacts with the IZUMO1/IZUMO1R complex, facilitating the fusion of the gametes (Vondrakova et al., 2022). 
+IZUMO proteins are sperm membrane proteins involved in the adhesion of the spermatozoa and oocyte. IZUMO1 is located on the plasma membrane of spermatozoa and it binds the IZUMO1R receptor on the oolemma, facilitating the adhesion. This interaction is mediated by two oocyte transmembrane proteins, tetraspans CD9 and CD81, the absence of which inhibits the sperm-oocyte fusion despite the normal adhesion (Vondrakova et al., 2022). The function of IZUMO2, IZUMO3 and IZUMO4 is unclear. Following sperm-oocyte adhesion, human-specific sperm-oocyte fusion epitope, FCRL3 protein (not shown in our network) interacts with the IZUMO1/IZUMO1R complex, facilitating the fusion of the gametes (Vondrakova et al., 2022). 
 
 ## Concluding remarks
-From this analysis and literature search, we can conclude that three of our modules represent three biological functions, with the bottom module representing the sperm capacitation through the oviduct, top left module representing oocyte identification and the interaction between the sperm and zona pellucida, and the top right module representing sperm-oocyte adhesion and fusion. CATSPER1 seems to act as a bridge between the bottom and top left modules, suggesting it may act as a regulator between sperm capacitation and binding to zona pellucida. Moreover, ADAM2 also seems to bridge the top left and right modules, implying that is may have a role in regulating the progression from sperm-zona pellucida binding to sperm-oolemma adhesion. In murine models, the lack of our central hub, CATSPER1, results in sterility, deeming it a truly essential node whose loss prevents the fertilization from occuring. 
+From this analysis and literature search, we can conclude that three of our modules represent three biological functions, with the bottom module representing the sperm capacitation through the oviduct, top left module representing oocyte identification and the interaction between the sperm and zona pellucida, and the top right module representing sperm-oocyte adhesion and fusion. CATSPER1 acts as a bridge between the bottom and top left modules, suggesting it may act as a regulator between sperm capacitation and binding to zona pellucida. Moreover, ADAM2 acts as a bridge bewteen the top left and right modules, implying that is may have a role in regulating the progression from sperm-zona pellucida binding to sperm-oolemma adhesion. In murine models, the lack of our central hub, CATSPER1, results in sterility, deeming it a truly essential node whose loss prevents the fertilization from occuring. 
 
 ## Bibliography
 
