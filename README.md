@@ -1,4 +1,5 @@
 # Network analysis of the fertilization pathway
+Fertilization is a process in reproductive biology which results in the fusion of male and female gametes, known as spermatozoon and oocyte, respectively, leading to the unison of parental genomes. Following reproduction, fertilization is initiated by sperm capacitation through the oviduct, after which the sperm recognises the oocyte and interacts with zona pellucida, which is the oocyte-surrounding extracellular matrix. The sperm then adheres to the oolemma, which is the oocyte plasma membrane, followed by spermatozoon-oocyte fusion (provided all required proteins are active and functional). After the gamete fusion, the spermatozoon is taken into the cytoplasm of the oocyte, known as the ooplasm, where it induces oocyte activation and embryogenesis.
 
 ## Data accessibility
 
@@ -191,17 +192,37 @@ nx.draw_networkx(fertilization, pos=pos, with_labels=True,
 
 From the above code chunk, we get the following output:
 
-![coloured-network-graph](https://github.com/user-attachments/assets/6abe66fe-2efc-4890-b92d-ac0c95ed6ff9)
+<img src="https://github.com/user-attachments/assets/6abe66fe-2efc-4890-b92d-ac0c95ed6ff9" width="650" />
 
 From this, we can see the module separation more clearly, and we can see that actually there may be not two, but three modules. 
 
 ## Analysis in the context of literature
 
-ZP1, ZP2, ZP3, and ZP4 are glycoproteins composing zona pellucida, which is an oocyte-surrounding extracellular matrix that mediates sperm binding. ZP1 is specifically responsible for maintaining the structural integrity of zona pellucida, ZP3 is involved in the formation of the zona matrix and binding of the sperm, whereas ZP2 and ZP4 do not have clearly defined roles but they are speculated to act as sperm receptors. 
+Several protein families and their interactions can be identified from the last output, including the zona pellucida (ZP) proteins, ADAM family proteins, Catsper proteins and Izumo protein family. 
 
-On the other hand, ADAM2, ADAM20, ADAM21, and ADAM30 are domains of a sperm membrane glycoprotein known as fertilin, which has an important role in migration of the spermatozoa through the oviduct, and binding both the zona pellucida and eventually the oocyte. 
+### The oocyte
+Zona pellucida is an oocyte-surrounding extracellular matrix that mediates sperm binding, composed of four glycoproteins: ZP1, ZP2, ZP3, and ZP4. ZP1 is specifically responsible for maintaining the structural integrity of zona pellucida, ZP3 is involved in the formation of the zona matrix and binding of the sperm, whereas ZP2 and ZP4 do not have clearly defined roles but they are speculated to act as sperm receptors (Uhlén et al., 2015). After recognising the oocyte, the sperm interacts with zona pellucida followed by adhesion and fusion with oolemma, which is the plasma membrane of the oocyte (Sutovsky, 2018). 
 
-CATSPER1, with the greatest betweenness centrality, is a subunit of a Catsper channel in spermatozoa, which is a Ca<sup>2+</sup> channel that mediates the motility of the spermatozoa. 
+### Migration of spermatozoa
+CATSPER1, with the greatest betweenness centrality, is a subunit of a Catsper channel in spermatozoa, which is a Ca<sup>2+</sup> channel that mediates the motility of the spermatozoa (Uhlén et al., 2015). Studies on murine models identified that Catsper channel is essential for male fertility, and its inactivation resulted in infertility (Ren et al., 2001). 
 
+On the other hand, ADAM2, ADAM20, ADAM21, and ADAM30 are domains of a sperm membrane glycoprotein known as Fertilin, which has an important role in migration of the spermatozoa through the oviduct, and binding both the zona pellucida and eventually the oocyte (Uhlén et al., 2015). 
 
+Thus, we now understand that Catsper proteins and ADAM proteins from our network make subunits of Catsper channel and Fertilin, respectively, which are important in sperm motility and capacitation.
+
+### Sperm-oocyte adhesion and fusion
+IZUMO proteins are sperm membrane proteins involved in the adhesion of the spermatozoa and oocyte. IZUMO1 is located on the sperm membrane and it binds the IZUMO1R receptor on the oolemma, facilitating the adhesion. This interaction is mediated by oocyte transmembrane proteins CD9 and CD81, the absence of which inhibits the sperm-oocyte fusion despite the normal adhesion (Vondrakova et al., 2022). The function of IZUMO2, IZUMO3 and IZUMO4 are unclear. Following sperm-oocyte adhesion, human-specific sperm-oocyte fusion epitope, FCRL3 protein (not shown in our network) interacts with the IZUMO1/IZUMO1R complex, facilitating the fusion of the gametes (Vondrakova et al., 2022). 
+
+## Concluding remarks
+From this analysis and literature search, we can conclude that three of our modules represent three biological functions, with the bottom module representing the sperm capacitation through the oviduct, top left module representing oocyte identification and the interaction between the sperm and zona pellucida, and the top right module representing sperm-oocyte adhesion and fusion. CATSPER1 seems to act as a bridge between the bottom and top left modules, suggesting it may act as a regulator between sperm capacitation and binding to zona pellucida. Moreover, ADAM2 also seems to bridge the top left and right modules, implying that is may have a role in regulating the progression from sperm-zona pellucida binding to sperm-oolemma adhesion. In murine models, the lack of our central hub, CATSPER1, results in sterility, deeming it a truly essential node whose loss prevents the fertilization from occuring. 
+
+## Bibliography
+
+Ren, D., Navarro, B., Perez, G., Jackson, A. C., Hsu, S., Shi, Q., Tilly, J. L., & Clapham, D. E. (2001). A sperm ion channel required for sperm motility and male fertility. Nature, 413(6856), 603-609. https://doi.org/10.1038/35098027 
+
+Sutovsky, P. (2018). Review: Sperm–oocyte interactions and their implications for bull fertility, with emphasis on the ubiquitin–proteasome system. Animal, 12, 121-132. https://doi.org/10.1017/S1751731118000253 
+
+Uhlén, M., Fagerberg, L., Hallström, B. M., Lindskog, C., Oksvold, P., Mardinoglu, A., Sivertsson, Å., Kampf, C., Sjöstedt, E., Asplund, A., Olsson, I., Edlund, K., Lundberg, E., Navani, S., Szigyarto, C. A.-K., Odeberg, J., Djureinovic, D., Takanen, J. O., Hober, S., ... Pontén, F. (2015). Tissue-based map of the human proteome. Science, 347(6220), 1260419. https://doi.org/10.1126/science.1260419 
+
+Vondrakova, J., Frolikova, M., Ded, L., Cerny, J., Postlerova, P., Palenikova, V., Simonik, O., Nahacka, Z., Basus, K., Valaskova, E., Machan, R., Pacey, A., Holubcova, Z., Koubek, P., Ezrova, Z., Park, S., Liu, R., Partha, R., Clark, N., . . . Komrskova, K. (2022). MAIA, Fc receptor–like 3, supersedes JUNO as IZUMO1 receptor during human fertilization. Science Advances, 8(36), eabn0047. https://doi.org/10.1126/sciadv.abn0047 
 
