@@ -41,7 +41,7 @@ The above line of code plots the following graph:<br/>
 
 <img src="https://github.com/user-attachments/assets/51cd86fd-752f-4041-b5c1-5115c75e7124" width="450" />
 
-From this, we can see that our network is divided into two groups of proteins that are loosely connected. In other words, our network has a modular structure which is very common for biological networks, and the two modules encode different biological functions. To understand this better and take this analysis further, we will introduce a few concepts from the Graph Theory.
+From this, we can see that our network is divided into two groups of proteins that are loosely connected. In other words, our network has a modular structure which is very common for biological networks, and the two modules encode different biological functions. To understand this better and take this analysis further, we will introduce a few concepts from Graph Theory.
 
 The Graph Theory states that:<br/>
 >A *graph* consists of a set *V* of vertices and a set *E* of edges, each edge being associated with two vertices.
@@ -56,12 +56,12 @@ nx.number_of_edges(fertilization)
 
 From this, we learn that our graph has 26 nodes and 124 edges, which tells us that our network consists of 26 proteins with 124 interactions. 
 
-Next we will identify the connectivity, also known as the degree of all nodes, which represents a number of links (i.e. edges) a node has to other nodes. 
+Next, we will identify the connectivity, also known as the degree of all nodes, which represents a number of links (i.e. edges) a node has to other nodes. 
 ```
 nx.degree(fertilization)
 ```
 
-From this, we get the following output, and learn that ADAM2 node has the highest degree of 17 links with other nodes.<br/>
+From this, we get the following output, and learn that the ADAM2 node has the highest degree of 17 links with other nodes.<br/>
 >DegreeView({'ACR': 11, 'SPAM1': 12, 'ADAM2': 17, 'ZP1': 14, 'IZUMO2': 6, 'IZUMO3': 9, 'CD9': 7, 'ZP4': 13, 'ZP3': 13, 'IZUMO4': 6, 'IZUMO1': 10, 'ZP2': 12, 'CATSPER1': 11, 'OVGP1': 10, 'B4GALT1': 10, 'ADAM30': 10, 'ADAM21': 10, 'ADAM20': 10, 'CATSPERB': 7, 'CATSPER3': 8, 'HVCN1': 6, 'KCNU1': 6, 'CATSPER2': 8, 'CATSPER4': 8, 'CATSPERD': 8, 'CATSPERG': 6})
 
 We can visualise this information in a degree distribution:
@@ -75,7 +75,7 @@ This plots the histogram below, where X-axis represents a degree, and y-axis rep
 
 From this histogram, we can understand that the minimum and maximum number of links a node in our network has is 6 and 17, respectively, including 5 nodes containing 6 links (in other words, 5 nodes with a degree of 6), and 1 node with a degree of 17. Moreover, 10 is the most frequent degree, as 6 nodes have a degree of 10.
 
-Nodes with high degrees are known as hubs, which are essential nodes in a network that often have a crucial role in information-transfer. As we are working with quite a small network, we easily identified the hub from the above output. However, imagine we had a much larger network that consists of hundreds of nodes... it would take too much time to manually search for the hub. In that case, this is how we could go about identifying our hub:
+Nodes with high degrees are known as hubs, which are essential nodes in a network that often have a crucial role in information transfer. As we are working with quite a small network, we easily identified the hub from the above output. However, imagine we had a much larger network that consists of hundreds of nodes... it would take too much time to manually search for the hub. In that case, this is how we could go about identifying our hub:
 ```
 degrees = dict(nx.degree(fertilization))
 hub = max(degrees, key = degrees.get)
@@ -85,7 +85,7 @@ print("This network contains a hub", hub, "with a degree of", degrees[hub])
 This prints the following output:<br/>
 >This network contains a hub ADAM2 with a degree of 17
 
-From the analysis we have done so far, we understand that our network of 26 proteins has two modules representing two biological functions with a total of 124 interactions. We identified the most connected protein in the network, which is ADAM2 with links to 17 other proteins, which forms an essential node with a likely role in information-transfer between the two modules. 
+From the analysis we have done so far, we understand that our network of 26 proteins has two modules representing two biological functions with a total of 124 interactions. We identified the most connected protein in the network, which is ADAM2 with links to 17 other proteins, which forms an essential node with a likely role in information transfer between the two modules. 
 
 Now that we have identified the degree of our nodes and the hub, we will assess the closeness and betweenness centrality. Closeness centrality can simply be defined as a measure of the distance between a node and all other nodes of the network. We can calculate it using the code below:
 ```
@@ -195,7 +195,7 @@ From the above code chunk, we get the following output:
 
 <img src="https://github.com/user-attachments/assets/2648d6c2-1e83-4d03-92f5-84f7b23945dc" width="650" />
 
-From this, we can see the module separation more clearly, and we can see that actually there may be not two, but three modules. 
+From this, we can see the module separation more clearly, and we can see that there may be not two, but three modules. 
 
 ## Analysis in the context of literature
 
@@ -205,17 +205,17 @@ Several protein families and their interactions can be identified from the last 
 Zona pellucida is an oocyte-surrounding extracellular matrix that mediates sperm binding, composed of four glycoproteins: ZP1, ZP2, ZP3, and ZP4. ZP1 is specifically responsible for maintaining the structural integrity of zona pellucida, ZP3 is involved in the formation of the zona matrix and binding of the sperm, whereas ZP2 and ZP4 do not have clearly defined roles but they are speculated to act as sperm receptors (Uhlén et al., 2015). After recognising the oocyte, the sperm interacts with zona pellucida followed by adhesion and fusion with oolemma (Sutovsky, 2018). 
 
 ### Migration of spermatozoa
-CATSPER1, with the greatest betweenness centrality, is a subunit of a Catsper channel in spermatozoa, which is a Ca<sup>2+</sup> channel that mediates the motility of the spermatozoa (Uhlén et al., 2015). Studies on murine models identified that Catsper channel is essential for male fertility, and its inactivation resulted in infertility (Ren et al., 2001). 
+CATSPER1, with the greatest betweenness centrality, is a subunit of a Catsper channel in spermatozoa, which is a Ca<sup>2+</sup> channel that mediates the motility of the spermatozoa (Uhlén et al., 2015). Studies on murine models identified that the Catsper channel is essential for male fertility, and its inactivation resulted in infertility (Ren et al., 2001). 
 
 #### Interaction with zona pellucida
-On the other hand, ADAM2, ADAM20, ADAM21, and ADAM30 are domains of a sperm membrane glycoprotein known as Fertilin, which has an important role in migration of the spermatozoa through the oviduct, and binding both the zona pellucida and eventually the oocyte (Uhlén et al., 2015). 
+On the other hand, ADAM2, ADAM20, ADAM21, and ADAM30 are domains of a sperm membrane glycoprotein known as Fertilin, which has an important role in the migration of the spermatozoa through the oviduct, and binding both the zona pellucida and eventually the oocyte (Uhlén et al., 2015). 
 
-Thus, we now understand that Catsper proteins and ADAM proteins from our network make subunits of Catsper channel and Fertilin, respectively, which are important in sperm motility and capacitation. Moreover, ADAM2, ZP1 and ZP4 were identified as the nodes with the higest closeness centrality in our analysis, implying these protein subunits are highly influential within this network. This implies that the interaction between the spermatozoa and zona pellucida may be mediated by molecular interaction between ADAM2 subunit of the Fertilin protein and zona pellucida proteins 1 and 4. 
+Thus, we now understand that Catsper proteins and ADAM proteins from our network make subunits of the Catsper channel and Fertilin, respectively, which are important in sperm motility and capacitation. Moreover, ADAM2, ZP1 and ZP4 were identified as the nodes with the highest closeness centrality in our analysis, implying these protein subunits are highly influential within this network. This implies that the interaction between the spermatozoa and zona pellucida may be mediated by molecular interaction between the ADAM2 subunit of the Fertilin protein and zona pellucida proteins 1 and 4. 
 
-Moreover, as CATSPER1 and ADAM2 have been identified as nodes with the highest betweenness centrality, they represent bridges connecting the biological functions (i.e the modules) of our network. 
+Moreover, as CATSPER1 and ADAM2 have been identified as nodes with the highest betweenness centrality, they represent bridges connecting the biological functions (i.e. the modules) of our network. 
 
 ### Sperm-oocyte adhesion and fusion
-IZUMO proteins are sperm membrane proteins involved in the adhesion of the spermatozoa and oocyte. IZUMO1 is located on the plasma membrane of spermatozoa and it binds the IZUMO1R receptor on the oolemma, facilitating the adhesion. This interaction is mediated by two oocyte transmembrane proteins, tetraspans CD9 and CD81, the absence of which inhibits the sperm-oocyte fusion despite the normal adhesion (Vondrakova et al., 2022). The function of IZUMO2, IZUMO3 and IZUMO4 is unclear. Following sperm-oocyte adhesion, human-specific sperm-oocyte fusion epitope, FCRL3 protein (not shown in our network) interacts with the IZUMO1/IZUMO1R complex, facilitating the fusion of the gametes (Vondrakova et al., 2022). 
+IZUMO proteins are sperm membrane proteins involved in the adhesion of the spermatozoa and oocyte. IZUMO1 is located on the plasma membrane of spermatozoa and it binds the IZUMO1R receptor on the oolemma, facilitating the adhesion. This interaction is mediated by two oocyte transmembrane proteins, tetraspans CD9 and CD81, the absence of which inhibits sperm-oocyte fusion despite the normal adhesion (Vondrakova et al., 2022). The function of IZUMO2, IZUMO3 and IZUMO4 is unclear. Following sperm-oocyte adhesion, human-specific sperm-oocyte fusion epitope, FCRL3 protein (not shown in our network) interacts with the IZUMO1/IZUMO1R complex, facilitating the fusion of the gametes (Vondrakova et al., 2022). 
 
 ## Concluding remarks
 From this analysis and literature search, we can conclude that three of our modules represent three biological functions, with the bottom module in our last diagram representing the sperm capacitation through the oviduct, the top left module representing oocyte identification and the interaction between the sperm and zona pellucida, and the top right module representing sperm-oocyte adhesion and fusion. CATSPER1 acts as a bridge between the bottom and top left modules, suggesting it may act as a regulator between sperm capacitation and binding to zona pellucida. Moreover, ADAM2 acts as a bridge between the top left and right modules, implying that it may have a role in regulating the progression from sperm-zona pellucida binding to sperm-oolemma adhesion. In murine models, the lack of our central hub, CATSPER1, results in sterility, deeming it a truly essential node whose loss prevents fertilization. An effort has been made to translate these findings into human studies, and an association between CASTPER1 mutations and human male infertility has been established (Hildebrand et al., 2010; Avenarious et al., 2009). CATSPER1 was later found to be involved in initiating human sperm hyperactivation, which is required for sperm-oocyte fusion and fertilization (Young et al., 2024). 
